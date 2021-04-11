@@ -107,7 +107,12 @@ route.put('/employee/:id', ProfileUpload.single('photo'), async (req, res) => {
             $set: employee
         });
 
-        res.status(200).json(employeeData)
+        res.status(200).json({
+            statuscode: 200,
+            status: true,
+            message: "Employee Updated Successfully",
+            token: jwt.sign({ employeeData }, 'interviewnodejs'),
+        })
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -117,7 +122,12 @@ route.put('/employee/:id', ProfileUpload.single('photo'), async (req, res) => {
 route.delete('/employee/:id', async (req, res) => {
     try {
         let employeeData = await Employee.deleteOne({ _id: req.params.id })
-        res.status(200).json(employeeData)
+        res.status(200).json({
+            statuscode: 200,
+            status: true,
+            message: "Employee Deleted Successfully",
+            token: jwt.sign({ employeeData }, 'interviewnodejs'),
+        })
     } catch (error) {
         res.status(400).json(error)
     }
